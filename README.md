@@ -1,7 +1,7 @@
 # Windows-Hook-攻防学习
 学习Windows系统及其Hook技术中的学习和思考
 
-第一章 SetWindowsHookEx实现键盘记录器
+# 第一章 SetWindowsHookEx实现键盘记录器
 > “无忌，我教你的还记得多少？”
 > “回太师傅，我只记得一大半。”
 > “那，现在呢？”
@@ -14,7 +14,7 @@
 
 已经一年多没有接触这个了，忘得干干净净，幸亏肌肉记忆还在，学起来十分亲切，废话不多说，进入正题。
 
-# 前言
+## 前言
 
 Hook是程序设计中最为灵活多变的技巧之一，在windows下，Hook有两种含义：
 1、系统提供的消息Hook机制，也就是我们今天要实现的hook，在后面会讲到。
@@ -28,7 +28,7 @@ visual studio 2015
 
 Windows 10
 
-# 消息Hook
+## 消息Hook
 
 Windows消息hook主要通过SetWindowsHookEx去下钩，通过UnhookWindowsHookEx()去断钩，所以我们接下来主要学会用这俩个函数。
 
@@ -42,7 +42,7 @@ Windows系统是建立在事件驱动的机制上的，每一个事件就是一�
 
 （那么我们今天就通过消息hook实现一个简单的键盘记录器，嘿嘿，知己知彼，百战不殆）！
 
-## 消息Hook流程
+### 消息Hook流程
 
 第一步：安装钩子
 
@@ -50,9 +50,10 @@ Windows系统是建立在事件驱动的机制上的，每一个事件就是一�
 
 中间步骤：我们要实现回调函数，实现我们自己的操作。例如获得键盘输入信息，并将其保存到txt文件中
 
-# 通过setWindowsHookEx()实现键盘记录器
+## 通过setWindowsHookEx()实现键盘记录器
 
-## **实现原理**
+
+### **实现原理**
 
 当按下键盘，产生一个消息，按键消息加入到系统消息队列  操作系统从消息队列中取出消息，添加到相应的程序的消息队列中 ；
 
@@ -60,7 +61,7 @@ Windows系统是建立在事件驱动的机制上的，每一个事件就是一�
 
 可以多次添加钩子，从而形成一个钩子链，可以依次调用函数。
 
-## **安装钩子**
+### **安装钩子**
 
 SetWindowsHookEx
 
@@ -121,7 +122,7 @@ CallNextHookEx(
     _In_ LPARAM lParam);
 ```
 
-## 卸载钩子
+### 卸载钩子
 
 卸载钩子API，钩子在使用完之后需要用UnhookWindowsHookEx()卸载，否则会造成麻烦。
 
@@ -134,7 +135,7 @@ UnhookWindowsHookEx(
     _In_ HHOOK hhk);
 ```
 
-## 键盘记录
+### 键盘记录
 
 主要的功能我们通过SetwindowsHookEx()参数中的回调函数HookProcedure()来实现。
 
@@ -152,13 +153,13 @@ LRESULT CALLBACK HookProcedure(int nCode, WPARAM wParam, LPARAM lParam)
 
 2.输出到文本，并保存
 
-## 一些逻辑
+### 一些逻辑
 
 获得当前窗口和当前时间；
 
 将记录的键盘消息保存到文件中；
 
-## 效果
+### 效果
 
 x86效果：
 
@@ -176,7 +177,7 @@ x64位
 
 
 
-# 参考资料
+## 参考资料
 
 [【windows核心编程】系统消息与自定义钩子（Hook）使用](https://www.cnblogs.com/17bdw/p/6533065.html)
 
